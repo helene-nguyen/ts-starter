@@ -151,21 +151,55 @@ npx eslint . --ext .ts
 
 This will ask you a series of questions. For this project we’ll answer the following:
 
-- *How would you like to use ESLint?* : To check syntax and find problems
+- _How would you like to use ESLint?_ : To check syntax and find problems
 
-- *What type of modules does your project use?* : JavaScript modules (import/export)
+- _What type of modules does your project use?_ : JavaScript modules (import/export)
 
-- *Which framework does your project use?* : None of these
+- _Which framework does your project use?_ : None of these
 
-- *Does your project use TypeScript?* : Yes
+- _Does your project use TypeScript?_ : Yes
 
-- *Where does your code run?* : Node
+- _Where does your code run?_ : Node
 
-- *What format do you want your config file to be in?* : JavaScript
+- _What format do you want your config file to be in?_ : JavaScript
 
 - Finally, you will be prompted to install some additioanl eslint libraries. Choose Yes.
 
-## Auto compile on save
+eslint configuration file 
+
+```js
+module.exports = {
+    "env": {
+        "node": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "overrides": [
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+    }
+}
+
+```
+
+parser: this tells ESLint to run the code through a parser when analyzing the code
+parserOptions: specifies what JS language options you want to support, such as the version of ECMAScript syntax you want to use
+plugins: this is where you define plugins to use
+extends: tells ESLint what configuration is set to extend from. The order matters, as the last extend option will override the previous ones in any conflicting configurations
+env: which environments your code will run in
+
+## Auto compiling TypeScript on save
 
 Configure package.json
 
@@ -195,7 +229,7 @@ Add in tsconfig.json file
   }
 ```
 
-### FIRST SOLUTION 
+### FIRST SOLUTION
 
 Open 2 terminal command line
 
@@ -211,11 +245,17 @@ In the second
 npm run dev
 ```
 
+In the third
+
+```sh
+npm run lint
+```
+
 ## SECOND ONE (chosen)
 
 Use package npm `concurrently` to launch both at the same time
 
-In package.json file 
+In package.json file
 
 ```js
   "scripts": {
@@ -226,11 +266,12 @@ In package.json file
   },
 ```
 
-And launch 
+And launch
 
 ```sh
 npm run watch
 ```
+
 And now you have everything connected : live compiling and running eslint for Typescript
 
 ![concurrently](./__docs__/concurrently.gif)
